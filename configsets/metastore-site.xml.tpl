@@ -37,12 +37,23 @@
           <name>hive.metastore.uris</name>
           <value>{{ $metastore_uris }}</value>
         </property>
+      
+      <!-- Azure configuration -->
+      {{- range $account := $.Values.azureSorage.accounts }}
+      <property>
+        <name>fs.azure.account.key.{{$account.name}}.blob.core.windows.net</name>
+        <value>{{$account.key}}</value>
+      </property>
+      {{- end }}
+      <!-- end of Azure configuration -->
+
       {{- if not (index .Env  "HIVE_WAREHOUSE_DIR")  }}
         <property>
           <name>hive.metastore.warehouse.dir</name>
           <value>file:///tmp/</value>
         </property>
       {{- end }}
+
      {{- if (index .Env "HIVE_CONF_PARAMS")  }}
         {{- $conf_list := .Env.HIVE_CONF_PARAMS | strings.Split ";" }}
         {{- range $parameter := $conf_list}}

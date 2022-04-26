@@ -10,14 +10,33 @@ replicaCount: 1
 
 ## Default Hive image and tag. Please build image locally before applying this.
 image:
-  name: hive-metastore
-  tag: latest
+  name: andreclaudino/hive-metastore
+  tag: 1.0.0-hive3
   pullPolicy: IfNotPresent
 
+azureSorage:
+  accounts: []
+    # - name: 
+    #   key:
+
+hiveConfigParameters:
+  - key: hive.metastore.event.db.notification.api.auth
+    value: "false"
+  - key: hadoop.proxyuser.hive.hosts
+    value: HS2_HOST
+  - key: hadoop.proxyuser.hive.groups
+    value: "*"
+  - key: datanucleus.autoStartMechanism
+    value: SchemaTable
 
 env:
   HIVE_DB_EXTERNAL: "false"
-  HIVE_DB_NAME: metastore_db
+  HIVE_WAREHOUSE_DIR: file:///tmp/
+  HIVE_DB_HOST: "hostname:5432"
+  HIVE_DB_NAME: hive_metastore_db
+  HIVE_DB_USER: hive-admin
+  HIVE_DB_PASS: hive-pass
+
 
 ## Resource requests and limits: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 resources:
@@ -30,11 +49,7 @@ resources:
 
 service:
   type: ClusterIP
-  ports:
-    - name: thrift
-      port: 9083
-      targetPort: 9083
-      protocol: TCP
+  port: 9093
 
 ## Auto-scaling (hpa) configuration
 autoscaling:

@@ -7,10 +7,14 @@ env:
   HIVE_DB_NAME: metastore_db
   HIVE_DB_USER: michael_scott
   HIVE_DB_PASS: thats-what-she-said
-  HIVE_CONF_PARAMS: hive.metastore.event.db.notification.api.auth:false;hadoop.proxyuser.hive.hosts:HS2_HOST;hadoop.proxyuser.hive.groups:*;datanucleus.autoStartMechanism:SchemaTable
+
+azureSorage:
+  accounts:
+    - name: storage-account-name
+      credential: storage-account-key
 
 service:
-  type: clusterIP
+  type: ClusterIP
 
 autoscaling:
   enabled: true
