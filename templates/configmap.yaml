@@ -46,14 +46,7 @@ data:
           <value>{{ $metastore_uris }}</value>
         </property>
       
-      <!-- Azure configuration -->
-      {{- range $account := $.Values.azureSorage.accounts }}
-        <property>
-          <name>fs.azure.account.key.{{ $account.name }}.blob.core.windows.net</name>
-          <value>{{ $account.key }}</value>
-        </property>
-      {{- end }}
-      <!-- end of Azure configuration -->
+      <-- end of S3 configuration -->
 
         <property>
           <name>hive.metastore.warehouse.dir</name>

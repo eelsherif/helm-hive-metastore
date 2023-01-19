@@ -4,7 +4,7 @@ LABEL maintainer="André Claudino"
 LABEL thanks-to="Amom Mendes"
 LABEL hive-metastore-version="3.0.0"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ARG HADOOP_VERSION=3.2.0
+ARG HADOOP_VERSION=3.3.1
 
 RUN apt-get update && \
     apt-get install -y curl --no-install-recommends && \
@@ -23,35 +23,45 @@ ENV HADOOP_CLASSPATH="${HADOOP_HOME}/share/hadoop/tools/lib/*:${METASTORE_HOME}/
 ENV PATH="${HADOOP_HOME}/bin:${METASTORE_HOME}/lib/:${HADOOP_HOME}/share/hadoop/tools/lib/:/opt/postgresql-jdbc.jar:${PATH}"
 
 # Download and extract the Hadoop binary package.
-RUN curl -s https://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz \
+RUN curl -s https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz   \
         | tar xz -C /opt/  \
         && ln -s ${HADOOP_HOME}-$HADOOP_VERSION ${HADOOP_HOME} \
         && rm -r ${HADOOP_HOME}/share/doc
 
+# Copy aws jars
+COPY hadoop-aws* {HADOOP_HOME}/share/hadoop/common/lib/
+COPY aws-java-sdk* {HADOOP_HOME}/share/hadoop/common/lib/
+
 # Add S3a jars to the Hadoop classpath
-RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws* ${HADOOP_HOME}/share/hadoop/common/lib/ && \
-    cp ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk* ${HADOOP_HOME}/share/hadoop/common/lib/
+#RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws* ${HADOOP_HOME}/share/hadoop/common/lib/ && \
+#    cp ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk* ${HADOOP_HOME}/share/hadoop/common/lib/
 
 # Add Azure jars to the Hadoop classpath
-RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/*azure* ${HADOOP_HOME}/share/hadoop/common/lib/
+#RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/*azure* ${HADOOP_HOME}/share/hadoop/common/lib/
 
 # Download and install the standalone metastore binary 
 # (Standalone Metastore is available after 3.0.0 version)
-RUN curl -s http://apache.uvigo.es/hive/hive-standalone-metastore-3.0.0/hive-standalone-metastore-3.0.0-bin.tar.gz \
+RUN curl -s https://downloads.apache.org/hive/hive-standalone-metastore-3.0.0/hive-standalone-metastore-3.0.0-bin.tar.gz \
         | tar xz -C /opt/ \
         && ln -s /opt/apache-hive-metastore-3.0.0-bin ${METASTORE_HOME}
 
 # Add S3a jars to the Hive Metastore classpath
-RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws* ${METASTORE_HOME}/lib/ && \
-    cp ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk* ${METASTORE_HOME}/lib/
+COPY hadoop-aws*  ${METASTORE_HOME}/lib/ 
+COPY aws-java-sdk* ${METASTORE_HOME}/lib/ 
+
+#RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws* ${METASTORE_HOME}/lib/ && \
+#    cp ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk* ${METASTORE_HOME}/lib/
 
 # Add Azure jars to the Hive Metastore classpath
-RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/*azure* ${METASTORE_HOME}/lib/
+#RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/*azure* ${METASTORE_HOME}/lib/
 
 # Download and install the postgres connector used by HiveMetastore
-RUN curl -s https://jdbc.postgresql.org/download/postgresql-42.2.16.jar -o postgresql-42.2.16.jar && mv postgresql-42.2.16.jar /opt/postgresql-jdbc.jar
+RUN curl -s  https://jdbc.postgresql.org/download/postgresql-42.5.1.jar -o postgresql-42.5.1.jar && mv  postgresql-42.5.1.jar /opt/postgresql-jdbc.jar
 RUN cp /opt/postgresql-jdbc.jar  ${HADOOP_HOME}/share/hadoop/common/lib/ && chmod -R 775 ${HADOOP_HOME}/share/hadoop/common/lib/*
 RUN cp /opt/postgresql-jdbc.jar ${METASTORE_HOME}/lib/ && chmod -R 775 ${METASTORE_HOME}/lib/*
+
+# metastore-site.xml 
+COPY metastore-site.xml ${METASTORE_HOME}/conf
 
 COPY entrypoint.sh ${METASTORE_HOME}/bin/
 RUN chmod 775 ${METASTORE_HOME}/bin/entrypoint.sh
