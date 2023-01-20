@@ -32,10 +32,10 @@ hiveConfigParameters:
 env:
   HIVE_DB_EXTERNAL: "true"
   HIVE_WAREHOUSE_DIR: file:///tmp/
-  HIVE_DB_HOST: "10.0.2.15:5432"
-  HIVE_DB_NAME: metastore_db
-  HIVE_DB_USER: hiveuser
-  HIVE_DB_PASS: Essam2381
+  HIVE_DB_HOST: "10.139.145.3:9432"
+  HIVE_DB_NAME: icebergcatalog
+  HIVE_DB_USER: icebergcatalogusr
+  HIVE_DB_PASS: hg5Mc1NC2pM4
 
 
 ## Resource requests and limits: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/

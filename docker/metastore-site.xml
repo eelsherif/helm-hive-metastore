@@ -37,7 +37,7 @@ likely need to add a number of new values. -->
   </property>
  <property>
     <name>javax.jdo.option.ConnectionURL</name>
-    <value>jdbc:postgresql://10.139.145.3:9432/icebergcatalog>
+    <value>jdbc:postgresql://10.139.145.3:9432/icebergcatalog</value>
     <description>PostgreSQL JDBC driver connection URL</description>
   </property>
 

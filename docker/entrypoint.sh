@@ -25,7 +25,7 @@ if [ -d ${HIVE_CONF_DIR}/templates ]; then
   done
 fi
 
-HIVE_START_CMD="/opt/hive-metastore/bin/start-metastore"
+HIVE_START_CMD="/opt/hive-metastore/bin/start-metastore -v"
 
 log "INFO" "Starting Hive Metastore service. Command: ${HIVE_START_CMD}"
 
