@@ -10,7 +10,8 @@ replicaCount: 1
 
 ## Default Hive image and tag. Please build image locally before applying this.
 image:
-  name: eelsherif/hive-metastore
+#  name: eelsherif/hive-metastore
+  name: harbor.dell.com/ai-data/hive-metastore
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -49,7 +50,7 @@ resources:
 
 service:
   type: ClusterIP
-  port: 9093
+  port: 9083
 
 ## Auto-scaling (hpa) configuration
 autoscaling:

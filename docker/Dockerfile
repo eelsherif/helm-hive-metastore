@@ -62,6 +62,7 @@ RUN cp /opt/postgresql-jdbc.jar ${METASTORE_HOME}/lib/ && chmod -R 775 ${METASTO
 
 # metastore-site.xml 
 COPY metastore-site.xml ${METASTORE_HOME}/conf
+COPY metastore-log4j2.properties ${METASTORE_HOME}/conf
 
 COPY entrypoint.sh ${METASTORE_HOME}/bin/
 RUN chmod 775 ${METASTORE_HOME}/bin/entrypoint.sh
@@ -80,5 +81,5 @@ WORKDIR ${METASTORE_HOME}
 # Also we need to use relative path, because the exec form does not invoke a command shell,
 # thus normal shell processing does not happen:
 # https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example
-
-CMD ["bin/entrypoint.sh"]
+CMD ./bin/start-metastore -v 
+#CMD ["bin/entrypoint.sh"]
