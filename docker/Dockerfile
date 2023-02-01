@@ -47,7 +47,8 @@ RUN curl -s https://downloads.apache.org/hive/hive-standalone-metastore-3.0.0/hi
 
 # Add S3a jars to the Hive Metastore classpath
 COPY hadoop-aws*  ${METASTORE_HOME}/lib/ 
-COPY aws-java-sdk* ${METASTORE_HOME}/lib/ 
+COPY aws-java-sdk* ${METASTORE_HOME}/lib/
+COPY iceberg-hive-runtime-1.1.0.jar ${METASTORE_HOME}/lib/
 
 #RUN cp ${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws* ${METASTORE_HOME}/lib/ && \
 #    cp ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk* ${METASTORE_HOME}/lib/
@@ -63,8 +64,9 @@ RUN cp /opt/postgresql-jdbc.jar ${METASTORE_HOME}/lib/ && chmod -R 775 ${METASTO
 # metastore-site.xml 
 COPY metastore-site.xml ${METASTORE_HOME}/conf
 COPY metastore-log4j2.properties ${METASTORE_HOME}/conf
-
+COPY core-site.xml ${HADOOP_HOME}/etc/hadoop/core-site.xml
 COPY entrypoint.sh ${METASTORE_HOME}/bin/
+
 RUN chmod 775 ${METASTORE_HOME}/bin/entrypoint.sh
 
 # Metastore URI Port

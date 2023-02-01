@@ -19,6 +19,16 @@
 likely need to add a number of new values. -->
 <configuration>
   <property>
+    <name>hive.aux.jars.path</name>
+    <value>/opt/hive-metastore/lib/iceberg-hive-runtime-1.1.0.jar</value>
+  </property>
+  <property>
+    <name>iceberg.engine.hive.enabled</name>
+    <value>true</value>
+  </property>
+
+
+  <property>
     <name>metastore.thrift.uris</name>
     <value>thrift://localhost:9083</value>
     <description>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.</description>
@@ -73,4 +83,28 @@ likely need to add a number of new values. -->
     <name>metastore.log4j.file</name>
     <value>metastore-log4j2.properties</value>
   </property>
+
+    <property>
+        <name>fs.s3a.access.key</name>
+        <value>at1-1004811-11ae770e-82ef-432c-b3b5-7c2e6d3750a4</value>
+    </property>
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <value>DJcfkwa9pQPtlOvKOzOqOd5J6bTbKF3ieqyqZ7D0</value>
+    </property>
+    <property>
+        <name>hadoop.fs.s3a.aws.credentials.provider</name>
+        <value>org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider</value>
+    </property>
+	<property>     
+		<name>fs.dremioS3.impl</name>     
+		<description>The FileSystem implementation. Must be set to com.dremio.plugins.s3.store.S3FileSystem</description>     
+		<value>com.dremio.plugins.s3.store.S3FileSystem</value> 
+	</property>
+
+    <property>
+        <name>fs.s3a.connection.ssl.enabled</name>
+        <value>true</value>
+    </property>
+
 </configuration>
