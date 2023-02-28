@@ -30,7 +30,7 @@ likely need to add a number of new values. -->
 
   <property>
     <name>metastore.thrift.uris</name>
-    <value>thrift://localhost:9083</value>
+    <value>thrift://localhost:9090</value>
     <description>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.</description>
   </property>
   <property>
