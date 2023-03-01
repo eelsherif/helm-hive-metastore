@@ -31,11 +31,11 @@
     </property>
     <property>
         <name>fs.s3a.access.key</name>
-        <value>at1-1004811-11ae770e-82ef-432c-b3b5-7c2e6d3750a4</value>
+        <value>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</value>
     </property>
     <property>
         <name>fs.s3a.secret.key</name>
-        <value>DJcfkwa9pQPtlOvKOzOqOd5J6bTbKF3ieqyqZ7D0</value>
+        <value>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</value>
     </property>
     <property>
         <name>fs.s3a.connection.ssl.enabled</name>

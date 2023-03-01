@@ -86,11 +86,11 @@ likely need to add a number of new values. -->
 
     <property>
         <name>fs.s3a.access.key</name>
-        <value>at1-1004811-11ae770e-82ef-432c-b3b5-7c2e6d3750a4</value>
+        <value>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</value>
     </property>
     <property>
         <name>fs.s3a.secret.key</name>
-        <value>DJcfkwa9pQPtlOvKOzOqOd5J6bTbKF3ieqyqZ7D0</value>
+        <value>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</value>
     </property>
     <property>
         <name>hadoop.fs.s3a.aws.credentials.provider</name>
